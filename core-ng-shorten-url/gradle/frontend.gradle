@@ -1,0 +1,41 @@
+def yarn(String dir, List<String> params) {
+    def isWindows = org.gradle.internal.os.OperatingSystem.current().isWindows()
+    def command = isWindows ? ['cmd', '/c', 'yarn'] : ['yarn']
+    command.addAll(params)
+    return {
+        workingDir dir
+        commandLine command
+    }
+}
+
+def env = hasProperty('env') ? env : null
+def mode = hasProperty('mode') ? mode : null;
+
+afterEvaluate {
+    assert project.ext.has('frontendDir')
+    Object frontendDir = project.ext['frontendDir']
+    String[] frontendDirs = frontendDir instanceof List ? frontendDir : [frontendDir]
+    tasks.register('buildFrontend') {
+        group = 'build'
+        doLast {
+            delete 'src/main/dist/web'
+
+            for (String dir : frontendDirs) {
+                assert file(dir).exists()
+
+                exec yarn(dir, ['install'])
+
+                def command = ['run', 'build']
+                if (env != null) command.addAll('--env', env)
+                if (mode != null) command.addAll('--mode', mode)
+                exec yarn(dir, command)
+
+                copy {
+                    from "${dir}/build/dist"
+                    if (env != null) exclude 'static/*'    // exclude everything in static folder on server env, but keep static folder if exists
+                    into 'src/main/dist/web'
+                }
+            }
+        }
+    }
+}

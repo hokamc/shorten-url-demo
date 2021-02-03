@@ -1,0 +1,47 @@
+apply from: file("${rootDir}/gradle/project.gradle")
+
+subprojects {
+    group = 'shorten-url'
+    version = '1.0.0'
+
+    repositories {
+        maven {
+            url 'https://neowu.github.io/maven-repo/'
+            content {
+                includeGroup 'core.framework'
+            }
+        }
+    }
+
+    sourceSets {
+        dev {
+            java {
+                srcDir 'src/dev/java'
+            }
+            compileClasspath += sourceSets.main.runtimeClasspath
+            runtimeClasspath += sourceSets.main.runtimeClasspath
+        }
+    }
+}
+
+def coreNGVersion = '7.5.10'
+
+configure(subprojects.findAll { it.name.matches('.*-service-interface') }) {
+    dependencies {
+        implementation "core.framework:core-ng-api:${coreNGVersion}"
+    }
+}
+
+configure([project(':shorten-url-service')]) {
+    apply from: file("${rootDir}/gradle/app.gradle")
+    dependencies {
+        implementation "core.framework:core-ng:${coreNGVersion}"
+        testImplementation "core.framework:core-ng-test:${coreNGVersion}"
+    }
+}
+
+project(':shorten-url-service') {
+    dependencies {
+        implementation project(':shorten-url-service-interface')
+    }
+}
