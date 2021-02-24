@@ -1,0 +1,46 @@
+<!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.16/dist/css/uikit.min.css"/>
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.16/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.16/dist/js/uikit-icons.min.js"></script>
+
+<script>
+    window.onload = () => {
+        document.querySelector("form").addEventListener('submit', event => {
+            event.preventDefault();
+            let url = document.getElementById("url").value;
+            fetch("https://localhost:8443/url", {
+                body: JSON.stringify({
+                    url: url
+                }),
+                method: 'POST',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
+            }).then(response => response.json().then(result => {
+                let urlInput = document.getElementById("url");
+                urlInput.value = result.url;
+                urlInput.disabled = true;
+
+                let button = document.getElementById("submitButton");
+                button.textContent = "DONE";
+                button.disabled = true;
+            }))
+        });
+    }
+</script>
+
+<div class="uk-container">
+    <div class="uk-position-center" style="width: 80%">
+        <img class="uk-align-center" src="https://image.flaticon.com/icons/svg/1803/1803092.svg"  width="200" alt="Shorten Url Demo">
+        <form class="uk-grid" uk-grid>
+        <div class="uk-width-expand">
+            <input class="uk-input" id="url" type="text" placeholder="https://www.google.com">
+        </div>
+        <div>
+            <button class="uk-button uk-button-default" id="submitButton">Create</button>
+        </div>
+        </form>
+    </div>
+</div>

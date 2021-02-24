@@ -1,5 +1,3 @@
-package app;
-
 import app.shorturl.ShortUrlServiceApp;
 
 /**

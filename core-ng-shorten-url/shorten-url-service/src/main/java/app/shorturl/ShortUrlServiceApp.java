@@ -20,9 +20,9 @@ public class ShortUrlServiceApp extends App {
         bind(Counter.class);
         bind(new AppContext(requiredProperty("app.domain")));
 
-        RedirectUrlController controller = bind(RedirectUrlController.class);
         api().service(ShortenUrlWebService.class, bind(ShortenUrlWebServiceImpl.class));
-        http().route(HTTPMethod.GET, "/:path(*)", controller);
+        http().route(HTTPMethod.GET, "/:path(*)", bind(RedirectUrlController.class));
+        http().route(HTTPMethod.GET, "/", bind(HomeController.class));
         http().limitRate().add("create-shorten-url", 5, 5, TimeUnit.HOURS);
     }
 }

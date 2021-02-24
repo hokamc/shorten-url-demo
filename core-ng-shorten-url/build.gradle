@@ -12,16 +12,6 @@ subprojects {
             }
         }
     }
-
-    sourceSets {
-        dev {
-            java {
-                srcDir 'src/dev/java'
-            }
-            compileClasspath += sourceSets.main.runtimeClasspath
-            runtimeClasspath += sourceSets.main.runtimeClasspath
-        }
-    }
 }
 
 def coreNGVersion = '7.5.10'

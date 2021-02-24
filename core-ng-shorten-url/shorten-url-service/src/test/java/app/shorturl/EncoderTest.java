@@ -13,36 +13,36 @@ class EncoderTest {
 
     @Test
     void encode0() {
-        assertThat(encoder.encode(0L)).isEqualTo("000000");
+        assertThat(encoder.encode(0L)).isEqualTo("000");
     }
 
     @Test
     void encode1() {
-        assertThat(encoder.encode(1L)).isEqualTo("000001");
+        assertThat(encoder.encode(1L)).isEqualTo("001");
     }
 
     @Test
     void encode61() {
-        assertThat(encoder.encode(61L)).isEqualTo("00000z");
+        assertThat(encoder.encode(61L)).isEqualTo("00z");
     }
 
     @Test
     void encode62() {
-        assertThat(encoder.encode(62L)).isEqualTo("000010");
+        assertThat(encoder.encode(62L)).isEqualTo("010");
     }
 
     @Test
     void encode123456() {
-        assertThat(encoder.encode(123456L)).isEqualTo("000W7E");
+        assertThat(encoder.encode(123456L)).isEqualTo("W7E");
     }
 
     @Test
-    void encode56800235583() {
-        assertThat(encoder.encode(56800235583L)).isEqualTo("zzzzzz");
+    void encode238327() {
+        assertThat(encoder.encode(238327L)).isEqualTo("zzz");
     }
 
     @Test
     void boundaryException() {
-        assertThrows(IllegalArgumentException.class, () -> encoder.encode(56800235584L));
+        assertThrows(IllegalArgumentException.class, () -> encoder.encode(238328L));
     }
 }

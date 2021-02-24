@@ -23,7 +23,7 @@ public class ShortenUrlWebServiceImpl implements ShortenUrlWebService {
     AppContext appContext;
 
     @Override
-    @LimitRate(value = "create-shorten-url")
+    @LimitRate("create-shorten-url")
     public CreateShortUrlResponse createUrl(CreateShortUrlRequest request) {
         String key = encoder.encode(counter.get());
         redis.set(key, request.url);
