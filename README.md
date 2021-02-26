@@ -26,7 +26,7 @@
 - [CI/CD](#CI/CD)
 - [Kubernetes](#kubernetes)
 - [Core-ng](#core-ng)
-- [Spring Boot](#spring Boot)
+- [Spring Boot](#spring-boot)
 - [Actix-web](#actix-web)
 - [Authors](#authors)
 
