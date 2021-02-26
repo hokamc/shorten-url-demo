@@ -48,8 +48,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./build/shorten-url-service/docker
-          file: ./build/shorten-url-service/docker/Dockerfile
+#          context: ./build/shorten-url-service/docker
+#          file: ./build/shorten-url-service/docker/Dockerfile
           push: true
           tags: hokamc/shorten-url-demo:latest
           cache-from: type=local,src=/tmp/.buildx-cache
