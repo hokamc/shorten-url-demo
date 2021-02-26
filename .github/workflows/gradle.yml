@@ -39,23 +39,23 @@ jobs:
         run: ./gradlew check && ./gradlew -Penv="dev" docker
 
       - name: Login to GitHub Container Registry
-          uses: docker/login-action@v1
-          with:
-            registry: ghcr.io
-            username: ${{ github.repository_owner }}
-            password: ${{ secrets.PACKAGES_TOKEN }}
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.PACKAGES_TOKEN }}
 
       - name: Build and push
-          uses: docker/build-push-action@v2
-          with:
-            context: build/shorten-url-service/docker
-            push: true
-            tags: hokamc/shorten-url-demo:latest
-            cache-from: type=local,src=/tmp/.buildx-cache
-            cache-to: type=local,dest=/tmp/.buildx-cache-new
+        uses: docker/build-push-action@v2
+        with:
+          context: build/shorten-url-service/docker
+          push: true
+          tags: hokamc/shorten-url-demo:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
 
       - name: Move cache
-          run: |
-            rm -rf /tmp/.buildx-cache
-            mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
