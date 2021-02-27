@@ -43,4 +43,4 @@ jobs:
           context: ./core-ng-shorten-url/build/shorten-url-service/docker
           file: ./core-ng-shorten-url/build/shorten-url-service/docker/Dockerfile
           push: true
-          tags: hokamc/shorten-url-demo:latest
+          tags: ghcr.io/hokamc/shorten-url-demo:latest
