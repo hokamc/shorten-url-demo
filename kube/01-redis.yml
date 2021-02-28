@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shorten-url-redis-config
+  namespace: shorten-url-demo
+data:
+  redis.conf: |-
+    maxmemory 256mb
+    appendonly no
+    save 900 1
+    save 300 10
+    save 60 10000
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: shorten-url-redis
+  namespace: shorten-url-demo
+spec:
+  serviceName: shorten-url-redis
+  selector:
+    matchLabels:
+      app: shorten-url-redis
+  replicas: 1
+  updateStrategy:
+    type: OnDelete
+  podManagementPolicy: Parallel
+  template:
+    metadata:
+      labels:
+        app: shorten-url-redis
+    spec:
+      containers:
+        - name: shorten-url-redis
+          image: redis:6
+          args: [ "/usr/local/etc/redis.conf" ]
+          resources:
+            requests:
+              memory: 300Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: config
+              mountPath: /usr/local/etc/redis.conf
+              readOnly: true
+              subPath: redis.conf
+      volumes:
+        - name: config
+          configMap:
+            name: shorten-url-redis-config
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 300Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shorten-url-redis
+  namespace: shorten-url-demo
+spec:
+  clusterIP: None
+  ports:
+    - port: 6379
+  selector:
+    app: shorten-url-redis
+---

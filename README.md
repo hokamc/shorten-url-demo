@@ -74,6 +74,10 @@ Scalable
 
 ## CI/CD
 
+I use Github action for CI. Major steps are building java, building image and push to registry.
+
+You can check the image from [hokamc/packages/shorten-url-demo](https://github.com/users/hokamc/packages/container/package/shorten-url-demo)
+
 ## Kubernetes
 
 ## Core-ng
