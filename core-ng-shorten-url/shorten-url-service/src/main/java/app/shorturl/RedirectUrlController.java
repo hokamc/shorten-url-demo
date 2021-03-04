@@ -1,6 +1,5 @@
 package app.shorturl;
 
-import core.framework.api.http.HTTPStatus;
 import core.framework.inject.Inject;
 import core.framework.redis.Redis;
 import core.framework.web.Controller;
