@@ -32,6 +32,9 @@
 
 ## Demo
 
+Let's play!
+
+https://shorturl.hokamc.work
 
 ## Features
 
@@ -79,6 +82,8 @@ I use Github action for CI. Major steps are building java, building image and pu
 You can check the image from [hokamc/packages/shorten-url-demo](https://github.com/users/hokamc/packages/container/package/shorten-url-demo)
 
 ## Kubernetes
+
+A statefulset for redis and a deployment for app which is easy to scale up.
 
 ## Core-ng
 
