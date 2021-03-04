@@ -23,7 +23,7 @@ public class RedirectUrlController implements Controller {
         } else {
             String url = redis.get(pathParam);
             if (url != null) {
-                return Response.redirect(url, HTTPStatus.FOUND);
+                return Response.redirect(url);
             } else {
                 throw new NotFoundException("invalid url");
             }
