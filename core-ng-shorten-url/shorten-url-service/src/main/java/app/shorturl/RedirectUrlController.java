@@ -1,5 +1,6 @@
 package app.shorturl;
 
+import core.framework.api.http.HTTPStatus;
 import core.framework.inject.Inject;
 import core.framework.redis.Redis;
 import core.framework.web.Controller;
@@ -22,7 +23,7 @@ public class RedirectUrlController implements Controller {
         } else {
             String url = redis.get(pathParam);
             if (url != null) {
-                return Response.redirect(url);
+                return Response.redirect(url, HTTPStatus.FOUND);
             } else {
                 throw new NotFoundException("invalid url");
             }

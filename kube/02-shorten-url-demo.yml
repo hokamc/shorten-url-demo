@@ -7,6 +7,7 @@ metadata:
     app: shorten-url-demo
 spec:
   replicas: 1
+  revisionHistoryLimit: 1
   selector:
     matchLabels:
       app: shorten-url-demo
@@ -23,7 +24,6 @@ spec:
       containers:
         - name: shorten-url-demo
           image: ghcr.io/hokamc/shorten-url-demo:latest
-          imagePullPolicy: IfNotPresent
           ports:
             - name: https
               containerPort: 8443
@@ -39,8 +39,8 @@ spec:
               path: /health-check
               scheme: HTTPS
               port: 8443
-            initialDelaySeconds: 5
-            timeoutSeconds: 3
+            initialDelaySeconds: 15
+            timeoutSeconds: 15
 ---
 apiVersion: v1
 kind: Service

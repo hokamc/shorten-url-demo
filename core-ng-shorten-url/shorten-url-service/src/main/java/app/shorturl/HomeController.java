@@ -25,7 +25,7 @@ public class HomeController implements Controller {
                 .file(path)
                 .contentType(ContentType.TEXT_HTML)
                 .header("Content-Encode", "gzip")
-                .header("Cache-Control", "public, max-age=310950767")
-                .header("Etag", Strings.format("W/\"{}\"", Files.size(path) + Files.lastModified(path).getEpochSecond()));
+                .header("Cache-Control", "public, max-age=31536000")
+                .header("Etag", Strings.format("W/\"{}:{}\"", Files.size(path), Files.lastModified(path).getEpochSecond()));
     }
 }

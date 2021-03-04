@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shorten-url-demo
+  namespace: shorten-url-demo
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  tls:
+    - hosts:
+        - shorturl.hokamc.work
+      secretName: shorten-url-hokamc-kube-tls
+  rules:
+    - host: shorturl.hokamc.work
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: shorten-url-demo
+                port:
+                  number: 443
