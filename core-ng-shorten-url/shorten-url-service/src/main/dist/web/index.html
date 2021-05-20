@@ -46,36 +46,40 @@
 
     <h1 class="margin-v"><strong>Shorten URL</strong></h1>
 
-    <form class="inline-form">
+    <form id='form' class="inline-form">
         <input class="long-input" type="text" placeholder="https://www.google.com" id="url">
         <input class="button-primary" type="submit" value="CREATE" id="submitButton">
     </form>
 </body>
 
 <script>
-    window.onload = () => {
-        document.querySelector("form").addEventListener('submit', event => {
-            event.preventDefault();
-            let url = document.getElementById("url").value;
-            fetch("https://shorturl.hokamc.work/url", {
-                body: JSON.stringify({
-                    url: url
-                }),
-                method: 'POST',
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                })
-            }).then(response => response.json().then(result => {
-                let urlInput = document.getElementById("url");
-                urlInput.value = result.url;
-                urlInput.disabled = true;
+    const form = document.getElementById('form');
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const url = document.getElementById("url").value;
+        fetch("https://shorturl.hokamc.work/url", {
+            body: JSON.stringify({
+                url: url
+            }),
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        }).then(response => response.json().then(result => {
+            const urlInput = document.getElementById("url");
+            urlInput.value = result.url;
+            urlInput.disabled = true;
+            urlInput.style.cursor = 'pointer';
+            urlInput.addEventListener('click', e => {
+                navigator.clipboard.writeText(result.url)
+                alert('copied to clipboard');
+            })
 
-                let button = document.getElementById("submitButton");
-                button.textContent = "DONE";
-                button.disabled = true;
-            }))
-        });
-    }
+            const button = document.getElementById("submitButton");
+            button.textContent = "DONE";
+            button.disabled = true;
+        }))
+    });
 </script>
 
 </html>
