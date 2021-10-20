@@ -5,6 +5,8 @@ metadata:
   namespace: shorten-url-demo
   labels:
     app: shorten-url-demo
+  annotations:
+    linkerd.io/inject: enabled
 spec:
   replicas: 1
   revisionHistoryLimit: 1
