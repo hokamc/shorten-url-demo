@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img src="https://image.flaticon.com/icons/svg/1803/1803092.svg"  width="200" alt="Shorten Url Demo"></a>
+ <img src="icon.png"  width="200" alt="Shorten Url Demo"></a>
 </p>
 <h1 align="center">Shorten Url Demo</h1>
 
