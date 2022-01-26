@@ -1,31 +1,25 @@
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: shorten-url-demo-ingress-kube-tls
-  namespace: shorten-url-demo
-spec:
-  dnsNames:
-    - shorturl.hokamc.work
-  issuerRef:
-    kind: ClusterIssuer
-    name: letsencrypt-production
-  secretName: shorten-url-demo-ingress-kube-tls
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: shorten-url-demo
   namespace: shorten-url-demo
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
-  entryPoints:
-    - websecure
-  routes:
-    - kind: Rule
-      match: Host(`shorturl.hokamc.work`)
-      services:
-        - name: shorten-url-demo
-          port: 443
   tls:
-    secretName: shorten-url-demo-ingress-kube-tls
+    - hosts:
+        - shorturl.hokamc.work
+      secretName: shorten-url-hokamc-kube-tls
+  rules:
+    - host: shorturl.hokamc.work
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: shorten-url-demo
+                port:
+                  number: 443
 ---
