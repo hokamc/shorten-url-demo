@@ -10,7 +10,7 @@ spec:
   tls:
     - hosts:
         - shorturl.hokamc.work
-      secretName: shorten-url-hokamc-kube-tls
+      secretName: shorten-url-demo-ingress-tls
   rules:
     - host: shorturl.hokamc.work
       http:
